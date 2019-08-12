@@ -1,0 +1,29 @@
+html {
+	background: lavender;
+}
+body {
+	font-family: sans-serif;
+	margin: 20xp auto;
+	width: 500px;
+}
+h1 {
+	font-size: 40px;
+	color: darkgrey;
+}
+p {
+}
+button {
+	width: 200px;
+}
+
+a {
+	padding: 10px 20px;
+	background: white;
+	text-decoration: none;
+	border-radius: 10px;
+}
+div {
+	padding: 20px 30px;
+	background: white;
+	border-radius: 10px;
+}

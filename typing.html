@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Typing text</title>
+	<link rel="stylesheet" type="text/css" href="css/typing.css">
+	<script type="text/javascript" language="javascript" src="texts.json"></script> 
+	<script type="text/javascript" language="javascript" src="js/typing.js"></script> 
+	<script>
+		window.onload = function(e) {
+			var p = new URLSearchParams(window.location.search.replace(/\+/gi,'2B'));
+			var text = texts[p.get('text')];
+			var time = parseInt(p.get('time'));
+			var textPreview = document.getElementById('textPreview');
+			textPreview.insertAdjacentHTML('beforeend', text);
+			var timer = document.getElementById('timer');
+			timer.insertAdjacentHTML('beforeend', time + ":00");
+			initializeTyping(text, time * 60);
+		}
+	</script>
+</head>
+<body>
+	<h1>Typing test</h1>
+	<div>
+		<p>
+		<div class="panel">
+			<div type="text" class="info"><span id="timer"></span></div>
+			<div type="text" id="speed" class="info">-</div>
+			<div type="text" id="errors" class="info">-</div>	
+		</div>
+		</p>
+		<div id="textPreview" class="text"></div>
+		<input id="typeInput" class="typing-input" type="text" tabindex="1" autofocus onkeyup="typeCharacter(event)" />
+		<div>
+			<button tabindex="2" onclick="restart()">
+				Restart
+			</button>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+@font-face {
+	font-family: PT Root UI;
+	src: url('fonts/PT Root UI_Regular.otf');
+}
+@font-face {
+	font-family: PT Root UI;
+	font-weight: bold;
+	src: url('fonts/PT Root UI_Bold.otf');
+}
+
+h1 {
+	color: blueviolet;
+	opacity: 0.5;
+}
+p > input {
+	border-radius: 10px;
+}
+body {
+	font-family: PT Root UI;
+	display: inline-block;
+	width: 700px;
+	height: 200px;
+
+	background: lavender;
+
+	--main-size: 500px;
+	--main-padding: 20px;
+	--main-border: 1px solid blueviolet;
+}
+
+.panel {
+	display: flex;
+	flex-direction: row;
+}
+
+.text {
+	width: var(--main-size);
+	height: 400px;
+	background-color: azure;
+	border: var(--main-border);
+	padding: var(--main-padding);
+	overflow-y: auto;
+}
+
+.typing-input {
+	font-family: PT Root UI;
+	font-size: 30px;
+	width: calc(var(--main-size) + 2 * var(--main-padding));
+	border: var(--main-border);
+}
+
+.info {
+	font-size: 30px;
+	padding: 5px;
+	min-width: 80px;
+	min-height: 50px;
+	display: inline-block;
+	margin-right: 20px;
+	border: 1px solid blueviolet;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#textPreview > span {
+	display: inline-block;
+	margin-left: 0.2em;
+}
+.current-word {
+	background-color: #ebc8ff;
+}
+.correct-word {
+	color: #1facaf;
+}
+.incorrect-word {
+	color: #f00000;
+}
+.incorrect-word-bgrnd {
+	background-color: #ff9b9b;
+}

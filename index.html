@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>typing test</title>
+		<link rel="stylesheet" href="css/index.css" />
+		<script>
+			function nextPage(element) {
+				var text = document.getElementById('text').value;
+				var time = document.getElementById('time').value;
+				window.open('typing.html?text=' + text + '&time=' + time);
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Typing test</h1>
+
+		<form name="selection" method="get" action="#" accept-charset="UTF-8">
+			<div>
+				<p>
+					<label for="text"> text selection </label>
+					<select name="text" id="text">
+						<option value="text1">Transport</option>
+						<option value="text2">Environment</option>
+						<option value="text3">Technology</option>
+					</select>
+				</p>
+				<p>
+					<label for="time"> time selection </label>
+					<select name="time" id="time">
+						<option value="1">1 minute</option>
+						<option value="2">2 minutes</option>
+						<option value="3">3 minutes</option>
+						<option value="5">5 minutes</option>
+						<option value="10">10 minutes</option>
+					</select>
+				</p>
+			</div>
+
+			<p>
+				<button onclick="return nextPage(this);" id="btnStart" class="btn">Start</button>
+			</p>
+		</form>
+	</body>
+</html>
