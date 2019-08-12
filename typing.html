@@ -8,14 +8,26 @@
 	<script type="text/javascript" language="javascript" src="js/typing.js"></script> 
 	<script>
 		window.onload = function(e) {
-			var p = new URLSearchParams(window.location.search.replace(/\+/gi,'2B'));
-			var text = texts[p.get('text')];
-			var time = parseInt(p.get('time'));
-			var textPreview = document.getElementById('textPreview');
+			let p = new URLSearchParams(window.location.search.replace(/\+/gi,'2B'));
+			let text = texts[p.get('text')];
+			let time = parseInt(p.get('time'));
+			let textPreview = document.getElementById('textPreview');
 			textPreview.insertAdjacentHTML('beforeend', text);
-			var timer = document.getElementById('timer');
+			let timer = document.getElementById('timer');
 			timer.insertAdjacentHTML('beforeend', time + ":00");
-			initializeTyping(text, time * 60);
+
+
+			let typingTest = new TypingTest();
+			typingTest.initializeTyping(text, time * 60);
+
+			let typeInput = document.getElementById('typeInput');
+			typeInput.onkeyup = function(e) {
+				typingTest.typeCharacter((e || window.event).keyCode);
+			};
+			let btnRestart = document.getElementById('btnRestart');
+			btnRestart.onclick = function() {
+				typingTest.restart();
+			};
 		}
 	</script>
 </head>
@@ -30,9 +42,9 @@
 		</div>
 		</p>
 		<div id="textPreview" class="text"></div>
-		<input id="typeInput" class="typing-input" type="text" tabindex="1" autofocus onkeyup="typeCharacter(event)" />
+		<input id="typeInput" class="typing-input" type="text" tabindex="1" autofocus />
 		<div>
-			<button tabindex="2" onclick="restart()">
+			<button id="btnRestart" tabindex="2">
 				Restart
 			</button>
 		</div>
