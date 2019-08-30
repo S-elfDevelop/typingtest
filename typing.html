@@ -23,8 +23,9 @@
 				words: textPreview, // '#textPreview'
 				input: typeInput,   // '#typeInput'
 				timer: timer,       // '#timer',
-				speed: document.getElementById('speed'), // '#speed'
-				errors: document.getElementById('errors')// '#errors'
+				speed: document.getElementById('speed'),     // '#speed'
+				errors: document.getElementById('errors'),   // '#errors'
+				accuracy: document.getElementById('accuracy')// '#accuracy'
 			});
 			typingTest.initializeTyping(text, time * 60);
 			
@@ -47,15 +48,28 @@
 	<div>
 		<p>
 		<div class="panel">
-			<div type="text" class="info"><span id="timer"></span></div>
-			<div type="text" id="speed" class="info">-</div>
-			<div type="text" id="errors" class="info">-</div>	
+			<div>
+				<div class="caption">Time</div>
+				<div class="info"><span id="timer"></span></div>
+			</div>
+			<div>
+				<div class="caption">Speed</div>
+				<div id="speed" class="info">-</div>
+			</div>
+			<div>
+				<div class="caption">Errors</div>
+				<div id="errors" class="info">-</div>
+			</div>
+			<div>
+				<div class="caption">Accuarcy</div>
+				<div id="accuracy" class="info">-</div>
+			</div>
 		</div>
 		</p>
 		<div id="textPreview" class="text"></div>
 		<input id="typeInput" class="typing-input" type="text" tabindex="1" autofocus />
 		<div>
-			<button id="btnRestart" tabindex="2">
+			<button class="restart-button" id="btnRestart" tabindex="2">
 				Restart
 			</button>
 		</div>

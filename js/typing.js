@@ -29,11 +29,19 @@ class TypingTest {
 			timer: timer to show time left
 			speed: speed calculated by formula
 			errors: incorrect words number
+			accuracy: accuracy of the typing
 		}
 	*/
 	constructor(elements) {
 		this._elements = elements;
-		if (!elements.words || !elements.input || !elements.timer || !elements.speed || !elements.errors) {
+		if (
+			!elements.words ||
+			!elements.input ||
+			!elements.timer ||
+			!elements.speed ||
+			!elements.errors ||
+			!elements.accuracy
+		) {
 			console.error('TypingTest incorrect input parameters');
 		}
 	}
@@ -163,12 +171,13 @@ class TypingTest {
 	_refreshStatistics(data) {
 		const commonWordLength = 5;
 		let minutes = data.seconds === data.secondsLeft ? 1 / 60 : (data.seconds - data.secondsLeft) / 60;
-		let speed_wpm = Math.ceil(data.typed / commonWordLength / minutes);
-		//let adjustedSpeedWPM = Math.ceil((data.typed / commonWordLength - data.incorrect) / minutes);
+		let typed_words = data.typed / commonWordLength;
+		let speed_wpm = Math.ceil(typed_words / minutes);
+		//let adjustedSpeedWPM = Math.ceil((typed_words - data.incorrect) / minutes);
 		let mistyped_words = data.incorrect;
-		//let accuracy = Math.ceil((correct / total) * 100);
 		this._elements.speed.innerHTML = speed_wpm >= 0 ? speed_wpm : 0;
 		this._elements.errors.innerHTML = mistyped_words;
+		this._elements.accuracy.innerHTML = Math.ceil(((typed_words - mistyped_words) / typed_words) * 100);
 	}
 
 	_finishTyping() {
