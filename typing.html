@@ -16,17 +16,28 @@
 			let timer = document.getElementById('timer');
 			timer.insertAdjacentHTML('beforeend', time + ":00");
 
-
-			let typingTest = new TypingTest();
-			typingTest.initializeTyping(text, time * 60);
-
 			let typeInput = document.getElementById('typeInput');
+			let btnRestart = document.getElementById('btnRestart');
+
+			let typingTest = new TypingTest({
+				words: textPreview, // '#textPreview'
+				input: typeInput,   // '#typeInput'
+				timer: timer,       // '#timer',
+				speed: document.getElementById('speed'), // '#speed'
+				errors: document.getElementById('errors')// '#errors'
+			});
+			typingTest.initializeTyping(text, time * 60);
+			
 			typeInput.onkeyup = function(e) {
 				typingTest.typeCharacter((e || window.event).keyCode);
 			};
-			let btnRestart = document.getElementById('btnRestart');
 			btnRestart.onclick = function() {
 				typingTest.restart();
+			};
+
+			typingTest.onFinished = (info) => {
+				typeInput.style.display = 'none';
+				textPreview.style.opacity = 0.4;
 			};
 		}
 	</script>

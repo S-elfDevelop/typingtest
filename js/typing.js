@@ -1,19 +1,8 @@
-// Alias for selector https://stackoverflow.com/questions/13383886/making-a-short-alias-for-document-queryselectorall
-window.$ = document.querySelectorAll.bind(document);
-
 const typingClasses = {
 	currentWord: 'current-word',
 	correctWord: 'correct-word',
 	incorrectWord: 'incorrect-word',
 	incorrectWordBgrnd: 'incorrect-word-bgrnd'
-};
-
-const elementIds = {
-	words: '#textPreview',
-	input: '#typeInput',
-	timer: '#timer',
-	speed: '#speed',
-	errors: '#errors'
 };
 
 class TypingTest {
@@ -28,8 +17,25 @@ class TypingTest {
 		typingTimer: null
 	};
 
-	constructor() {
-		//do nothing
+	_elements = null;
+
+	onFinished = null;
+
+	/*  Input parameters:
+
+		elements = {
+			words: words area
+			input: input area
+			timer: timer to show time left
+			speed: speed calculated by formula
+			errors: incorrect words number
+		}
+	*/
+	constructor(elements) {
+		this._elements = elements;
+		if (!elements.words || !elements.input || !elements.timer || !elements.speed || !elements.errors) {
+			console.error('TypingTest incorrect input parameters');
+		}
 	}
 
 	initializeTyping(text, seconds) {
@@ -41,7 +47,7 @@ class TypingTest {
 		this._info.seconds = seconds;
 
 		let words = text.split(' ');
-		let wordsElement = $(elementIds.words)[0];
+		let wordsElement = this._elements.words;
 		wordsElement.innerHTML = '';
 		this._clearInput();
 
@@ -60,7 +66,7 @@ class TypingTest {
 	typeCharacter(keyCode) {
 		const spaceKey = 32;
 
-		let wordElement = $(elementIds.input)[0];
+		let wordElement = this._elements.input;
 		let finish = false;
 
 		if (wordElement.value.match(/^\s/g)) {
@@ -99,14 +105,14 @@ class TypingTest {
 				let currentMinutes = Math.floor(this._info.secondsLeft / 60);
 				let currentSeconds = this._info.secondsLeft % 60; // time - currentMinutes * 60
 				let paddedCurrentSeconds = currentSeconds < 10 ? '0' + currentSeconds : currentSeconds;
-				$(elementIds.timer)[0].innerHTML = `${currentMinutes}:${paddedCurrentSeconds}`;
+				this._elements.timer.innerHTML = `${currentMinutes}:${paddedCurrentSeconds}`;
 				this._refreshStatistics(this._info);
 			}
 		}, 1000);
 	}
 
 	_verifyTimer() {
-		let timerTextValue = $(elementIds.timer)[0].innerHTML;
+		let timerTextValue = this._elements.timer.innerHTML;
 		if (timerTextValue == '0:00') {
 			return false;
 		}
@@ -114,7 +120,7 @@ class TypingTest {
 	}
 
 	_verifyWord(word) {
-		let currentElement = $(`.${typingClasses.currentWord}`)[0];
+		let currentElement = this._getCurrentWord();
 		let hasErrors = word.trim() != currentElement.innerHTML.substring(0, word.length);
 		if (hasErrors) {
 			currentElement.classList.add(typingClasses.incorrectWordBgrnd);
@@ -125,7 +131,7 @@ class TypingTest {
 	}
 
 	_pushWord(word) {
-		let currentElement = $(`.${typingClasses.currentWord}`)[0];
+		let currentElement = this._getCurrentWord();
 		if (this._verifyWord(word)) {
 			currentElement.classList.remove(typingClasses.currentWord);
 			currentElement.classList.add(typingClasses.correctWord);
@@ -144,7 +150,7 @@ class TypingTest {
 	}
 
 	_nextLine() {
-		let currentElement = $(`.${typingClasses.currentWord}`)[0]; // second line (first word)
+		let currentElement = this._getCurrentWord(); // second line (first word)
 		if (!currentElement) return;
 		let previous = currentElement.previousSibling;
 		if (currentElement.offsetTop > previous.offsetTop) {
@@ -161,25 +167,25 @@ class TypingTest {
 		//let adjustedSpeedWPM = Math.ceil((data.typed / commonWordLength - data.incorrect) / minutes);
 		let mistyped_words = data.incorrect;
 		//let accuracy = Math.ceil((correct / total) * 100);
-		$(elementIds.speed)[0].innerHTML = speed_wpm >= 0 ? speed_wpm : 0;
-		$(elementIds.errors)[0].innerHTML = mistyped_words;
+		this._elements.speed.innerHTML = speed_wpm >= 0 ? speed_wpm : 0;
+		this._elements.errors.innerHTML = mistyped_words;
 	}
 
 	_finishTyping() {
 		if (!!this._info.typingTimer) {
 			clearInterval(this._info.typingTimer);
 			this._info.typingTimer = null;
+			if (!!this.onFinished && typeof this.onFinished === 'function') {
+				this.onFinished(this._info);
+			}
 		}
 	}
 
+	_getCurrentWord() {
+		return document.getElementsByClassName(typingClasses.currentWord)[0];
+	}
+
 	_clearInput() {
-		$(elementIds.input)[0].value = '';
+		this._elements.input.value = '';
 	}
 }
-
-// function getElement(id) {
-// 	return document.getElementById(id);
-// }
-// function getElementByClass(className) {
-// 	return document.getElementsByClassName(className);
-// }
