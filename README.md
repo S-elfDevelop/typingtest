@@ -19,4 +19,4 @@ This method handles the typed character, then indicates the word if it is requir
 ``keyCode - key of the symbol (number).``
 
 ## restart()
-Clear input area and reload the page.
+Clears input area and reloads the page.
