@@ -2,7 +2,6 @@
 Test your typing-speed which is expressed in words-per-minute.
 
 
-## Public methods:
 
 ## initializeTyping(text, seconds)
 Initializes the initial state of the component according to the text and seconds values. 
